@@ -1,14 +1,21 @@
 # Research Log
 
-Day 1
-Studied deep learning fundamentals and image representation in neural networks.
+Day 1 – First CNN Implementation
 
-Day 2
-Explored satellite imagery datasets and analyzed object detection approaches.
+Implemented a convolutional neural network in PyTorch and trained it on the CIFAR-10 dataset.
 
-Day 3
-Implemented first convolutional neural network for image classification.
+Key concepts explored
 
-Observations
-Object detection models will likely be required due to the small size of debris objects.
+Image representation as tensors
+
+DataLoader batching mechanism
+
+Convolutional layers for feature extraction
+
+Training loops with backpropagation
+
+Model evaluation using test accuracy
+
+This experiment established the deep learning pipeline that will later be adapted for satellite imagery analysis and space debris detection.
+
 
