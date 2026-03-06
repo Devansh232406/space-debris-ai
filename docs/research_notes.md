@@ -14,4 +14,23 @@ Key concepts explored
 
 This experiment established the deep learning pipeline that will later be adapted for satellite imagery analysis and space debris detection.
 
+Day 2 – Satellite Data Exploration
+
+Explored the characteristics of satellite imagery and remote sensing datasets.
+
+Key concepts studied
+
+* Satellite images contain large scenes with multiple objects.
+* High resolution imagery requires object detection models rather than simple classification.
+* Image normalization and data augmentation improve model performance.
+
+Experiments performed
+
+* Loaded and visualized image datasets using PyTorch.
+* Applied normalization and augmentation transforms.
+* Analyzed image tensor structure.
+
+Observations
+
+Object detection models such as YOLO will likely be required to detect small debris objects in satellite imagery.
 
