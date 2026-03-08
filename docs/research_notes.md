@@ -34,3 +34,43 @@ Observations
 
 Object detection models such as YOLO will likely be required to detect small debris objects in satellite imagery.
 
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from torchvision.datasets import CIFAR10
+from torchvision import transforms
+
+# Transform
+transform = transforms.ToTensor()
+
+# Load dataset
+dataset = CIFAR10(
+    root="./data",
+    train=True,
+    download=True,
+    transform=transform
+)
+
+# Get one image
+image, label = dataset[0]
+
+# Convert tensor to image
+image_np = image.permute(1,2,0)
+
+# Plot image
+fig, ax = plt.subplots()
+ax.imshow(image_np)
+
+# Draw fake bounding box (for demonstration)
+rect = patches.Rectangle(
+    (5,5),        # x,y position
+    20,20,        # width,height
+    linewidth=2,
+    edgecolor='red',
+    facecolor='none'
+)
+
+ax.add_patch(rect)
+
+plt.title(f"Label: {label}")
+plt.show()
