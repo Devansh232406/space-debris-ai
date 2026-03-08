@@ -37,9 +37,6 @@ Object detection models such as YOLO will likely be required to detect small deb
 
 Day 3 Update
 
-Implemented a bounding box visualization experiment to understand how object detection models represent object locations.
-
-Used a CIFAR10 image and manually drew a bounding box using matplotlib patches to simulate detection output.
-
-This experiment helped illustrate how detection models produce spatial predictions alongside class labels.
-
+* Implemented a bounding box visualization experiment to understand how object detection models represent object locations.
+* Used a CIFAR10 image and manually drew a bounding box using matplotlib patches to simulate detection output.
+* This experiment helped illustrate how detection models produce spatial predictions alongside class labels.
