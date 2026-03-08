@@ -35,42 +35,11 @@ Observations
 Object detection models such as YOLO will likely be required to detect small debris objects in satellite imagery.
 
 
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-from torchvision.datasets import CIFAR10
-from torchvision import transforms
+Day 3 Update
 
-# Transform
-transform = transforms.ToTensor()
+Implemented a bounding box visualization experiment to understand how object detection models represent object locations.
 
-# Load dataset
-dataset = CIFAR10(
-    root="./data",
-    train=True,
-    download=True,
-    transform=transform
-)
+Used a CIFAR10 image and manually drew a bounding box using matplotlib patches to simulate detection output.
 
-# Get one image
-image, label = dataset[0]
+This experiment helped illustrate how detection models produce spatial predictions alongside class labels.
 
-# Convert tensor to image
-image_np = image.permute(1,2,0)
-
-# Plot image
-fig, ax = plt.subplots()
-ax.imshow(image_np)
-
-# Draw fake bounding box (for demonstration)
-rect = patches.Rectangle(
-    (5,5),        # x,y position
-    20,20,        # width,height
-    linewidth=2,
-    edgecolor='red',
-    facecolor='none'
-)
-
-ax.add_patch(rect)
-
-plt.title(f"Label: {label}")
-plt.show()
