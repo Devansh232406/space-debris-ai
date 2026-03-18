@@ -1,0 +1,12 @@
+# Space Debris Detection Dataset Configuration
+# YOLO format
+
+path: ../dataset
+train: train/images
+val: valid/images
+test: test/images
+
+# Classes
+nc: 1
+names:
+  0: space_debris
