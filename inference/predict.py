@@ -6,7 +6,6 @@ Falls back to synthetic demo detections when no custom model is available.
 
 import os
 import sys
-import cv2
 import numpy as np
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple

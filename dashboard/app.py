@@ -6,7 +6,6 @@ Main application entry point.
 import sys
 import os
 import json
-import cv2
 import numpy as np
 import pandas as pd
 import streamlit as st

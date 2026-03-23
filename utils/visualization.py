@@ -3,7 +3,6 @@ Space Debris AI — Detection Visualization Utilities
 Draw bounding boxes, labels, and confidence scores on images.
 """
 
-import cv2
 import numpy as np
 from typing import List, Tuple, Optional
 
@@ -34,6 +33,11 @@ def draw_detections(
         - confidence: float 0-1
         - label: str
     """
+    try:
+        import cv2
+    except ImportError:
+        return image  # Return unmodified if cv2 not available
+
     annotated = image.copy()
 
     for det in detections:
@@ -75,6 +79,11 @@ def create_stats_overlay(
     risk_level: str,
 ) -> np.ndarray:
     """Add a semi-transparent statistics overlay to the image."""
+    try:
+        import cv2
+    except ImportError:
+        return image  # Return unmodified if cv2 not available
+
     overlay = image.copy()
     h, w = image.shape[:2]
 
