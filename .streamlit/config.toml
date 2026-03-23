@@ -1,0 +1,13 @@
+[theme]
+# Space Debris AI Custom Theme (Matching dashboard/app.py styling)
+primaryColor = "#00b4ff"
+backgroundColor = "#0a0e1a"
+secondaryBackgroundColor = "#111827"
+textColor = "#e0e8ff"
+font = "sans serif"
+
+[server]
+# Enable caching and fast execution
+enableCORS = false
+enableXsrfProtection = false
+maxUploadSize = 50  # Allow larger satellite image uploads (up to 50MB)

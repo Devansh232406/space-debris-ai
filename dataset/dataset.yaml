@@ -1,0 +1,14 @@
+# Space Debris AI — YOLOv8 Dataset Configuration
+# Auto-generated dataset with synthetic space debris imagery
+
+path: c:/Users/Lenovo/OneDrive/Desktop/New folder/space-debris-ai/dataset
+train: train/images
+val: valid/images
+test: test/images
+
+# Class names
+names:
+  0: space_debris
+
+# Number of classes
+nc: 1

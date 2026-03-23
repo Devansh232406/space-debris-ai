@@ -37,3 +37,8 @@ dataset/test/
 
 # Jupyter
 .ipynb_checkpoints/
+
+# YOLO training artifacts
+models/debris_detection/
+models/debris_evaluation/
+runs/

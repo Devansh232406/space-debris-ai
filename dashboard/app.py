@@ -5,6 +5,7 @@ Main application entry point.
 
 import sys
 import os
+import json
 import cv2
 import numpy as np
 import pandas as pd
@@ -259,11 +260,12 @@ with st.sidebar:
 
 
 # ─── Main Content Tabs ──────────────────────────────────
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "🔍 Detection",
     "🌍 3D Orbital View",
     "📊 Analytics",
     "📋 History",
+    "🧠 Model Performance",
 ])
 
 # ═══════════════════════════════════════════════════════════
@@ -670,6 +672,154 @@ with tab4:
             <div style="font-size:3rem; margin-bottom:16px;">📋</div>
             <div style="font-size:1.1rem; font-weight:500; color:#8892b0;">
                 No detection history yet. Upload and analyze images in the Detection tab.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+
+# ═══════════════════════════════════════════════════════════
+# TAB 5: Model Performance
+# ═══════════════════════════════════════════════════════════
+with tab5:
+    st.markdown('<div class="section-header">🧠 Model Performance & Evaluation</div>', unsafe_allow_html=True)
+
+    metrics_path = PROJECT_ROOT / "logs" / "training_metrics.json"
+
+    if metrics_path.exists():
+        with open(metrics_path, "r") as f:
+            metrics = json.load(f)
+
+        # ── Training Config ──
+        config = metrics.get("config", {})
+        st.markdown('<div class="section-header">⚙️ Training Configuration</div>', unsafe_allow_html=True)
+
+        c1, c2, c3, c4 = st.columns(4)
+        with c1:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-label">Model</div>
+                <div class="metric-value" style="font-size:1.2rem">{config.get('model', 'N/A')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c2:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-label">Epochs</div>
+                <div class="metric-value">{config.get('epochs', 'N/A')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c3:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-label">Batch Size</div>
+                <div class="metric-value">{config.get('batch_size', 'N/A')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with c4:
+            st.markdown(f"""
+            <div class="metric-card">
+                <div class="metric-label">Image Size</div>
+                <div class="metric-value">{config.get('image_size', 'N/A')}</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("")
+
+        # ── Evaluation Metrics ──
+        evaluation = metrics.get("evaluation", {})
+        if evaluation:
+            st.markdown('<div class="section-header">📈 Evaluation Metrics</div>', unsafe_allow_html=True)
+
+            m1, m2, m3, m4, m5 = st.columns(5)
+            metric_items = [
+                (m1, "mAP@50", evaluation.get("mAP50", 0), "#00e5ff"),
+                (m2, "mAP@50-95", evaluation.get("mAP50_95", 0), "#7c3aed"),
+                (m3, "Precision", evaluation.get("precision", 0), "#22dd66"),
+                (m4, "Recall", evaluation.get("recall", 0), "#ffaa00"),
+                (m5, "F1 Score", evaluation.get("f1_score", 0), "#ff4444"),
+            ]
+            for col, label, value, color in metric_items:
+                with col:
+                    st.markdown(f"""
+                    <div class="metric-card">
+                        <div class="metric-label">{label}</div>
+                        <div class="metric-value" style="color:{color}">{value:.4f}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            st.markdown("")
+
+            # Metrics bar chart
+            fig_metrics = go.Figure()
+            metric_names = list(evaluation.keys())
+            metric_values = list(evaluation.values())
+            colors = ["#00e5ff", "#7c3aed", "#22dd66", "#ffaa00", "#ff4444"]
+            fig_metrics.add_trace(go.Bar(
+                x=metric_names,
+                y=metric_values,
+                marker=dict(color=colors[:len(metric_names)]),
+                text=[f"{v:.4f}" for v in metric_values],
+                textposition="outside",
+                textfont=dict(color="white"),
+            ))
+            fig_metrics.update_layout(
+                title=dict(text="Model Evaluation Metrics", font=dict(color="#00d4ff", size=15)),
+                template="plotly_dark",
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(10,14,26,0.5)",
+                height=350,
+                margin=dict(t=50, b=40),
+                yaxis=dict(range=[0, 1.1]),
+            )
+            st.plotly_chart(fig_metrics, use_container_width=True)
+
+        # ── Training Plots ──
+        plots = metrics.get("plots", {})
+        if plots:
+            st.markdown('<div class="section-header">📊 Training & Evaluation Plots</div>', unsafe_allow_html=True)
+
+            # Show plots in 2-column grid
+            plot_names = {
+                "confusion_matrix": "Confusion Matrix",
+                "PR_curve": "Precision-Recall Curve",
+                "P_curve": "Precision Curve",
+                "R_curve": "Recall Curve",
+                "F1_curve": "F1 Score Curve",
+                "results": "Training Results",
+            }
+
+            available_plots = [(k, v) for k, v in plots.items() if os.path.exists(v)]
+
+            for i in range(0, len(available_plots), 2):
+                cols = st.columns(2)
+                for j, col in enumerate(cols):
+                    idx = i + j
+                    if idx < len(available_plots):
+                        key, path = available_plots[idx]
+                        with col:
+                            display_name = plot_names.get(key, key)
+                            st.markdown(f"**{display_name}**")
+                            st.image(path, use_container_width=True)
+
+        # ── Training Timestamp ──
+        timestamp = metrics.get("timestamp", "Unknown")
+        st.markdown(f"""
+        <div style="text-align:center; color:#4a5578; padding:20px; font-size:0.85rem;">
+            Last trained: {timestamp} &nbsp;|&nbsp;
+            Optimizer: {config.get('optimizer', 'N/A')} &nbsp;|&nbsp;
+            LR: {config.get('learning_rate', 'N/A')}
+        </div>
+        """, unsafe_allow_html=True)
+
+    else:
+        st.markdown("""
+        <div style="text-align:center; padding:60px 20px; color:#6b7db3;">
+            <div style="font-size:4rem; margin-bottom:16px;">🧠</div>
+            <div style="font-size:1.2rem; font-weight:600; color:#8892b0; margin-bottom:8px;">
+                No trained model metrics found
+            </div>
+            <div style="font-size:0.9rem;">
+                Train a model using <code>python training/train.py</code> to see performance metrics here.
             </div>
         </div>
         """, unsafe_allow_html=True)
