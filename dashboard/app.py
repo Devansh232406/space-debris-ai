@@ -280,10 +280,11 @@ with tab1:
     )
 
     if uploaded_file is not None:
-        # Load image
-        file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-        image = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
-        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        # Load image using PIL (no cv2 system libs needed)
+        pil_image = Image.open(uploaded_file).convert("RGB")
+        image_rgb = np.array(pil_image)
+        # Convert RGB to BGR for detection pipeline compatibility
+        image = image_rgb[:, :, ::-1].copy()
 
         col_orig, col_detect = st.columns(2)
 
@@ -303,7 +304,7 @@ with tab1:
 
         # Draw detections
         annotated = draw_detections(image, detections)
-        annotated_rgb = cv2.cvtColor(annotated, cv2.COLOR_BGR2RGB)
+        annotated_rgb = annotated[:, :, ::-1]  # BGR -> RGB for display
 
         with col_detect:
             st.markdown("**🎯 Detection Results**")
