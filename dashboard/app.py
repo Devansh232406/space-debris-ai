@@ -42,159 +42,210 @@ st.set_page_config(
 # ─── Custom CSS ──────────────────────────────────────────
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
     /* Root variables */
     :root {
-        --bg-primary: #0a0e1a;
-        --bg-secondary: #111827;
-        --bg-card: #1a1f35;
-        --text-primary: #e0e8ff;
-        --text-secondary: #8892b0;
-        --accent-blue: #00b4ff;
-        --accent-cyan: #00e5ff;
-        --accent-purple: #7c3aed;
-        --risk-high: #ff4444;
+        --bg-primary: #050810;
+        --bg-secondary: #0a0f1c;
+        --bg-card: rgba(15, 20, 35, 0.45);
+        --text-primary: #f0f4ff;
+        --text-secondary: #94a3b8;
+        --accent-blue: #00e5ff;
+        --accent-purple: #9d4edd;
+        --risk-high: #ff3366;
         --risk-medium: #ffaa00;
-        --risk-low: #22dd66;
+        --risk-low: #00ff99;
     }
 
-    /* Global styling */
+    /* Global styling and typography */
+    html, body, [class*="css"] {
+        font-family: 'Outfit', sans-serif !important;
+        color: var(--text-primary);
+    }
+
+    /* Animated Deep Space Background */
     .stApp {
-        background: linear-gradient(135deg, #0a0e1a 0%, #0f1629 50%, #0a0e1a 100%);
-        font-family: 'Inter', sans-serif;
+        background: radial-gradient(circle at 15% 50%, rgba(157, 78, 221, 0.15), transparent 40%),
+                    radial-gradient(circle at 85% 30%, rgba(0, 229, 255, 0.15), transparent 40%),
+                    #050810 !important;
+        background-attachment: fixed;
+        animation: breath 15s ease-in-out infinite alternate;
+    }
+    
+    @keyframes breath {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 100%; }
     }
 
-    /* Hide default Streamlit header */
-    header[data-testid="stHeader"] {
-        background: transparent;
+    /* Edge-to-edge layout override */
+    .block-container.stMainBlockContainer {
+        padding-top: 2rem !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        max-width: 1600px !important;
     }
 
-    /* Main header */
+    /* Hide default Streamlit header & footer */
+    header[data-testid="stHeader"], footer {
+        display: none !important;
+    }
+
+    /* Main header styling */
     .main-header {
         text-align: center;
-        padding: 30px 20px 10px;
-        background: linear-gradient(180deg, rgba(0,180,255,0.08) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(0,180,255,0.1);
-        margin-bottom: 24px;
+        padding: 40px 20px 20px;
+        background: linear-gradient(180deg, rgba(0,229,255,0.05) 0%, transparent 100%);
+        border-bottom: 1px solid rgba(0,229,255,0.1);
+        margin-bottom: 30px;
+        border-radius: 0 0 24px 24px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
     .main-header h1 {
-        font-size: 2.4rem;
+        font-size: 3rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #00b4ff, #00e5ff, #7c3aed);
+        background: linear-gradient(135deg, #00e5ff, #9d4edd, #ff3366);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 4px;
-        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+        letter-spacing: -1px;
     }
     .main-header p {
-        color: #6b7db3;
-        font-size: 1rem;
+        color: var(--text-secondary);
+        font-size: 1.1rem;
         font-weight: 400;
-    }
-
-    /* Section headers */
-    .section-header {
-        color: #00d4ff;
-        font-size: 1.2rem;
-        font-weight: 700;
-        margin: 20px 0 12px;
-        padding-bottom: 8px;
-        border-bottom: 2px solid rgba(0,180,255,0.2);
         letter-spacing: 0.5px;
     }
 
-    /* Card styling */
+    /* Glassmorphic Metric Cards */
     .metric-card {
-        background: linear-gradient(135deg, rgba(26,31,53,0.9), rgba(17,24,39,0.9));
-        border: 1px solid rgba(0,180,255,0.15);
-        border-radius: 12px;
-        padding: 20px;
+        background: var(--bg-card);
+        border: 1px solid rgba(0, 229, 255, 0.15);
+        border-radius: 16px;
+        padding: 24px;
         text-align: center;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     }
     .metric-card:hover {
-        border-color: rgba(0,180,255,0.4);
-        box-shadow: 0 4px 20px rgba(0,180,255,0.1);
+        border-color: rgba(0, 229, 255, 0.5);
+        box-shadow: 0 10px 40px rgba(0, 229, 255, 0.2);
+        transform: translateY(-5px);
     }
     .metric-value {
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: 800;
-        color: #00e5ff;
-        margin: 4px 0;
+        color: var(--accent-blue);
+        margin: 8px 0;
+        text-shadow: 0 0 20px rgba(0,229,255,0.4);
     }
     .metric-label {
-        font-size: 0.8rem;
-        color: #6b7db3;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
+        font-weight: 600;
     }
 
     /* Risk badges */
     .risk-badge {
         display: inline-block;
-        padding: 4px 16px;
-        border-radius: 20px;
+        padding: 6px 18px;
+        border-radius: 30px;
         font-weight: 700;
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         letter-spacing: 0.5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
     }
-    .risk-high { background: rgba(255,68,68,0.2); color: #ff4444; border: 1px solid rgba(255,68,68,0.3); }
-    .risk-medium { background: rgba(255,170,0,0.2); color: #ffaa00; border: 1px solid rgba(255,170,0,0.3); }
-    .risk-low { background: rgba(34,221,102,0.2); color: #22dd66; border: 1px solid rgba(34,221,102,0.3); }
+    .risk-high { background: rgba(255,51,102,0.15); color: var(--risk-high); border: 1px solid rgba(255,51,102,0.4); text-shadow: 0 0 10px rgba(255,51,102,0.6); }
+    .risk-medium { background: rgba(255,170,0,0.15); color: var(--risk-medium); border: 1px solid rgba(255,170,0,0.4); text-shadow: 0 0 10px rgba(255,170,0,0.6); }
+    .risk-low { background: rgba(0,255,153,0.15); color: var(--risk-low); border: 1px solid rgba(0,255,153,0.4); text-shadow: 0 0 10px rgba(0,255,153,0.6); }
+
+    /* Section Headers */
+    .section-header {
+        color: var(--accent-blue);
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 30px 0 16px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid rgba(0,229,255,0.1);
+        text-shadow: 0 0 10px rgba(0,229,255,0.3);
+    }
+
+    /* Sidebar Glassmorphism */
+    [data-testid="stSidebar"] {
+        background: rgba(10, 15, 28, 0.6) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border-right: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Sleek Segmented Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 12px;
+        background: rgba(15, 20, 35, 0.4);
+        padding: 8px;
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        margin-bottom: 20px;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+    .stTabs [data-baseweb="tab"] {
+        background: transparent;
+        border-radius: 10px;
+        color: var(--text-secondary);
+        border: none;
+        padding: 10px 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, rgba(0,229,255,0.2), rgba(157,78,221,0.2)) !important;
+        color: var(--text-primary) !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        border: 1px solid rgba(0,229,255,0.3) !important;
+    }
+
+    /* Cyberpunk Buttons */
+    .stButton > button {
+        background: linear-gradient(135deg, #00e5ff 0%, #9d4edd 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
+        padding: 10px 28px;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #9d4edd 0%, #00e5ff 100%);
+        box-shadow: 0 0 20px rgba(0,229,255,0.4);
+        transform: translateY(-2px);
+    }
 
     /* File uploader styling */
     .stFileUploader > div {
-        border: 2px dashed rgba(0,180,255,0.3) !important;
-        border-radius: 12px !important;
-        background: rgba(17,24,39,0.5) !important;
-    }
-
-    /* DataFrame styling */
-    .stDataFrame {
-        border-radius: 10px;
-        overflow: hidden;
-    }
-
-    /* Sidebar */
-    .css-1d391kg, [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0f1629 0%, #0a0e1a 100%);
-    }
-
-    /* Plotly chart background fix */
-    .js-plotly-plot .plotly .main-svg {
-        border-radius: 12px;
-    }
-
-    /* Button styling */
-    .stButton > button {
-        background: linear-gradient(135deg, #00b4ff, #7c3aed);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        padding: 8px 24px;
+        border: 2px dashed rgba(0,229,255,0.4) !important;
+        border-radius: 16px !important;
+        background: rgba(15, 20, 35, 0.3) !important;
+        backdrop-filter: blur(8px);
         transition: all 0.3s ease;
     }
-    .stButton > button:hover {
-        box-shadow: 0 4px 20px rgba(0,180,255,0.3);
-        transform: translateY(-1px);
+    .stFileUploader > div:hover {
+        border-color: #9d4edd !important;
+        background: rgba(15, 20, 35, 0.5) !important;
     }
 
-    /* Tabs */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
-    }
-    .stTabs [data-baseweb="tab"] {
-        background: rgba(26,31,53,0.5);
-        border-radius: 8px;
-        color: #8892b0;
-        border: 1px solid rgba(0,180,255,0.1);
-    }
-    .stTabs [aria-selected="true"] {
-        background: rgba(0,180,255,0.15) !important;
-        color: #00d4ff !important;
-        border-color: rgba(0,180,255,0.3) !important;
+    /* DataFrames / Tables */
+    .stDataFrame {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.05);
     }
 </style>
 """, unsafe_allow_html=True)
