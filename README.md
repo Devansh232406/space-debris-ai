@@ -4,7 +4,7 @@ An AI-powered system that detects space debris from satellite images using **YOL
 
 ![Space Debris AI Dashboard](https://via.placeholder.com/1000x500.png?text=Space+Debris+AI+Dashboard+-+Insert+Screenshot+Here)
 
-**Live Demo**: [Streamlit Cloud Deployment Link] *(Insert your deployment link here)*
+**Live Demo**: [[Streamlit Cloud Deployment Link] ](https://space-debris-ai-ghueh7hcxrn4ued3bhwcdv.streamlit.app/)
 
 ---
 
