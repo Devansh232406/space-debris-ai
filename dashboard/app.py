@@ -93,28 +93,27 @@ st.markdown("""
 
     /* Main header styling */
     .main-header {
-        text-align: center;
-        padding: 40px 20px 20px;
-        background: linear-gradient(180deg, rgba(0,229,255,0.05) 0%, transparent 100%);
-        border-bottom: 1px solid rgba(0,229,255,0.1);
+        text-align: left;
+        padding: 10px 0 20px 0;
+        background: transparent;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
         margin-bottom: 30px;
-        border-radius: 0 0 24px 24px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
     .main-header h1 {
-        font-size: 3rem;
+        font-size: 2.2rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #00e5ff, #9d4edd, #ff3366);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 8px;
-        letter-spacing: -1px;
+        color: var(--text-primary);
+        margin-bottom: 4px;
+        letter-spacing: -0.5px;
     }
     .main-header p {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-        font-weight: 400;
+        color: var(--accent-blue);
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 0;
         letter-spacing: 0.5px;
     }
 
