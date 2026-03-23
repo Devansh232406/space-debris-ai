@@ -2,7 +2,7 @@
 
 An AI-powered system that detects space debris from satellite images using **YOLOv8** and visualizes debris orbiting Earth through an interactive **3D dashboard**.
 
-![Space Debris AI Dashboard](https://via.placeholder.com/1000x500.png?text=Space+Debris+AI+Dashboard+-+Insert+Screenshot+Here)
+
 
 **Live Demo**: [[Streamlit Cloud Deployment Link] ](https://space-debris-ai-ghueh7hcxrn4ued3bhwcdv.streamlit.app/)
 
