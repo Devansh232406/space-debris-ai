@@ -1,6 +1,6 @@
 # 🛰️ Space Debris AI — Intelligent Orbital Debris Detection & Visualization
 
-An AI-powered system that detects space debris from satellite images using **YOLOv8** and visualizes debris orbiting Earth through an interactive **3D dashboard**.
+An AI-powered system that detects space debris from satellite images using **YOLOv8** and visualizes debris orbiting Earth by an interactive **3D dashboard**.
 
 
 
